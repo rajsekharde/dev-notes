@@ -2,11 +2,11 @@
 
 **Dockerfile**:
 
-FROM python:3.9 # Start from the official Python base image
+FROM python:3.11-slim # Start from the official Python base image
 
 WORKDIR /code # Set the current working directory to /code. This is where we'll put the requirements.txt file and the app directory
 
-COPY ./requirements.txt /code/requirements.txt # Copy the file with the requirements to the /code directory
+COPY . . # Copy full backend root directory
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt # Install dependencies without storing them locally
 

@@ -35,4 +35,13 @@ networks:
 
 Run: docker compose up --build -d
 
+** Only defining POSTGRES_PASSWORD in environment is enough to run postgres on docker
+
+
 Access PostgreSQL inside Docker: docker exec -it <container_name> psql -U <username> -d <db_name>
+
+Exit psql: \q
+
+List tables: \dt
+
+Describe a table (view columns and types): \d table_name

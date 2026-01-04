@@ -1,7 +1,7 @@
 
 installation: pip install sqlmodel
 
-**For Database Models**:
+**Create Database Models**:
 
 from sqlmodel import SQLModel, Field
 from uuid import UUID, uuid4
@@ -45,3 +45,40 @@ class JobFiles(SQLModel, table=True):
     id: int = Field(primary_key=True)
     job_id: int = Field(foreign_key="job.id") # Foreign key = 'id' from 'job'
     job: Job = Relationship((back_populates="job_files")) # Reverse relation to job
+
+
+**Create Database Engine**:
+
+from sqlmodel import create_engine
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+POSTGRES_USER = os.getenv("POSRGRES_USER")
+POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
+POSTGRES_DB = os.getenv("POSTGRES_DB")
+
+DB_HOST = os.getenv("DB_HOST")
+DB_PORT = os.getenv("DB_PORT")
+
+DATABASE_URL = f"postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{DB_HOST}:{DB_PORT}/{POSTGRES_DB}"
+
+
+engine = create_engine(
+    DATABASE_URL,
+    echo=False
+)
+
+
+**Create Database Session**:
+
+from sqlmodel import Session
+from src.database.engine import engine
+
+def get_session():
+    with Session(engine) as session:
+        yield session
+
+
+**Run alembic migration to initialize database**
