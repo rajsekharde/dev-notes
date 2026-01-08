@@ -21,3 +21,29 @@ Dequeue- RPOP. Removes and returns the element at the tail of the list. eg- RPOP
 
 Peek- LRANGE. Returns the element at the tail of the list, which is the next to be dequeued. eg- LRANGE myqueue -1 -1
 
+
+
+**. Python and Redis Queue .**:
+
+Redis Queue (RQ): Python library for queueing jobs and processing them in the background with workers. Uses Redis for backend storage of jobs.
+
+eg:
+
+from rq import Queue
+from redis import Redis
+
+redis_conn = Redis() # Establish a connection to Redis
+
+q = Queue(connection=redis_conn) # Create a queue
+
+result = q.enqueue(count_words_at_url, 'http://nvie.com')
+
+-> count_words_at_url- A user defined function that takes a URL, downloads the content of the page at that URL, and counts the number of words. The function is enqueued as a job, which will be processed by a worker in the background.
+
+
+**. Producer-Consumer Architecture: .**
+
+Producer -> Queue -> Consumers
+
+eg- FastAPI server (Producer) -> Redis Queue -> Python Workers (Consumers)
+

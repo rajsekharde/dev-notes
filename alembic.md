@@ -110,3 +110,5 @@ RUN: docker exec -it fastapi_container_name alembic upgrade head
 Check created db, tables using psql
 
 For future changes to db: run alembic revision --autogenerate -m "" then alembic upgrade head inside docker
+
+For downgrading the latest migration: run alembic downgrade -1 , then delete the migration file, generate new migration file and upgrade head
